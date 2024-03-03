@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <style>
+        *,html{
+            margin: 0%;
+            padding: 0%;
+        }
+        body{
+            overflow-y:hidden;
+        }
+        img {
+        width: 100%;
+        height: auto;
+        }
+        
+        .SignInForm{
+        border: solid;
+        border-color: black; 
+        text-align: center;
+        width: 400px;
+        text-align: center;
+        }
+        
+    </style>
+</h:head>
+<h:body>
+    <div style="position: absolute;
+                alignment-adjust: central;">
+        
+        <img src="Lib6.jpg" 
+             style="opacity: 30%;"/>
+        
+        <div style="position: absolute;
+                    top: 35%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);">
+            
+            <h:form class="SignInForm">
+                <div >
+                    <h2> 
+                        WELCOME TO BOOK PREVIEW
+                    </h2>
+                    <br/><br/>
+                </div>
+                
+                <h:panelGrid columns="2" style="margin-left: 7vh;">
+                <h:outputText value="Name"/>
+                <h:inputText value="#{reg.login.fullName}"/>
+                <h:message for="username">Username Required</h:message>
+                <br/><br/>                
+                
+                <h:outputText value="E-mail"/>
+                <h:inputText value="#{reg.login.email}"/>
+                <h:message for="username">Username Required</h:message>
+                <br/><br/>                          
+                
+                <h:outputText value="Gender"/>
+                <h:inputText value="#{reg.login.gender}"/>
+                <h:message for="username">Username Required</h:message>
+                <br/><br/>                
+                
+                <h:outputText value="Username"/>
+                <h:inputText value="#{reg.login.userName}"/>
+                <h:message for="username">Username Required</h:message>
+                <br/><br/>                
+                
+                <h:outputText value="Password"/>
+                <h:inputSecret value="#{reg.login.passWord}"/>
+                <h:message for="username">Username Required</h:message>
+                <br/><br/>
+                
+                <h:outputText value="    "/>
+                <h:commandButton action="#{reg.Registration()}" 
+                                 value="Login"
+                                 style="
+                                 padding-left: 2vh;
+                                 padding-right: 2vh;"/>
+                <br/><br/>
+                </h:panelGrid>
+                
+            </h:form>
+            
+    </div>
+  </div>
+</h:body>;
+</html>

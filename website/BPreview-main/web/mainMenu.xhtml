@@ -1,0 +1,561 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <style>
+        body,html{
+            margin: 0%;
+            padding: 0%;
+            width: 100%;
+            height: 100vh;
+        }
+        
+        img {
+        width: 100%;
+        height: 100%;
+        }
+        
+        
+        
+        ul{
+            position: fixed;
+            bottom: 91vh;
+            left: 75vh;
+        }
+        
+        .navButton{
+            size: 70vh;
+            margin-right:6vh;
+            background-color: transparent;
+            border-radius: 9px
+        }
+        
+        .dropbtn {
+            background-color: transparent;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+          display: inline-block;
+          margin-left: 54vh;
+          position: fixed;
+          top: 2vh;
+        }
+
+        .dropdown-content {
+          width: 23vh;
+          text-align: center;
+          display: none;
+          position: absolute;
+          background-color: white;
+          opacity: 70%;
+          min-width: 100px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 3;
+        }
+
+        .dropdown-content a {
+          color: black;
+          padding: 12px;
+          text-decoration: none;
+          display: block;
+        }
+
+        .dropdown-content a:hover {
+            color: #ff6633;
+        }
+
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #ffffff;
+            opacity: 30%;
+            border-radius: 9vh;
+        }
+    </style>
+</h:head>
+<h:body>
+    
+    <div>
+        <div style="background-color: #cc6600;
+                    position: fixed;
+                    height: 10vh;
+                    width: 220vh;
+                    ">
+                <h2 style="position: absolute;
+                 left: 14vh;">Book Preview</h2>
+            <ul>
+                <h:button class="navButton"
+                    value="Home"
+                    outcome="mainMenu"
+                />
+                
+                <h:button class="navButton"
+                    value="About Us"
+                    outcome="AboutUsPage"
+                />
+                
+                <h:button class="navButton"
+                    value="Request"
+                    outcome="ReqPage"
+                />
+                
+                
+                <div class="dropdown">
+                    <h:button class="dropbtn" image="setting.svg"/>
+                    <div class="dropdown-content">
+                        
+                        <p:commandButton
+                        style="background-color: transparent;
+                                border-color: transparent;"
+                      icon="ui-icon-plusthick"
+                      id="addUserBtn"
+                      value="Add Book"
+                      update=":bookDetail1"
+                      ajax="true"
+                      oncomplete="PF('$bookDetail1').show()"
+                        />
+                        
+                        <p:column
+                            headerText="Delete"
+                            style="text-align:center"
+                          >
+                            <p:commandButton
+                                style="background-color: transparent;
+                                border-color: transparent;
+                                margin-left: 2px;
+                                width: 15vh;"
+                              value="Delete"
+                              icon="ui-icon-trash"
+                              ajax="true"
+                              actionListener="#{bookC.changeBook(book)}"
+                              update=":bookDetail3"
+                              oncomplete="PF('$bookDetail3').show()"
+                            />
+                            
+                          </p:column>
+                        
+                        
+                        
+                        
+                        <p:commandButton
+                            
+                            style="background-color: transparent;
+                                border-color: transparent;
+                                margin-left: 2px;
+                                width: 19vh;"
+                              value="Log Out"
+                              icon="ui-icon-close"
+                              ajax="true"
+                              actionListener="#{bookC.changeBook(book)}"
+                              update=":bookDetail3"
+                              oncomplete="PF('$bookDetail3').show()"
+                            />
+                        
+                    </div>
+                </div>
+                
+            </ul>
+        </div>
+        
+        <div style="
+             background-image: url(Lib7.jpg);
+             background-position: center;
+             background-size: 100%;
+             height: 100vh;">
+            
+            <p:dialog
+    id="bookDetail1"
+    widgetVar="$bookDetail1"
+    header="Add
+Book"
+    hideEffect="explode"
+    appendTo="@(body)"
+    resizable="false"
+    draggable="false"
+    closeOnEscape="true"
+  >
+    <h:form>
+      <p:panelGrid columns="2">
+        <h:outputLabel for="title" value="Book Title: *" />
+        <p:inputText
+          id="title"
+          value="#{bookC.book.title}"
+          label="Book Title"
+          placeholder="Book Title"
+        />
+        <h:outputLabel for="author" value="Book Author" />
+        <p:inputText
+          id="author"
+          label="Book author"
+          value="#{bookC.book.writer}"
+          placeholder="Book Author"
+        />
+        <h:outputLabel for="Preview" value="Book preview" />
+        <p:inputTextarea
+          id="Preview"
+          label="Book Preview"
+          value="#{bookC.book.preview}"
+          placeholder="Preview"
+        />
+        <p:outputLabel for="datePub" value="Published Date" />
+        <p:calendar
+          id="datePub"
+          value="#{bookC.book.releaseDate}"
+          label="DatePosted:"
+          required="true"
+          pattern="dd/MM/yyyy"
+          effect="slideDown"
+          requiredMessage="Please Enter Published Date!"
+          navigator="true"
+          showButtonPanel="true"
+          yearRange="c-60:c+60"
+          placeholder="Published Date"
+        />
+        <p:outputLabel for="Link" value="Link" />
+        <p:inputText
+          id="Link"
+          label="Link"
+          value="#{bookC.book.link}"
+          placeholder="Link"
+        />
+        <p:commandButton
+          value="Add"
+          process="@form"
+          id="AddButtonId"
+          ajax="true"
+          icon="ui-icon-plus"
+          update=":form1:userTable"
+          actionListener="#{bookC.addBook()}"
+          oncomplete="PF('$bookDetail1').hide()"
+        />
+        <p:commandButton
+          id="cancelAddButtonId"
+          value="Cancel"
+          onclick="handleComplete(xhr, status, args)"
+        />
+      </p:panelGrid>
+    </h:form>
+  </p:dialog>
+            
+            
+            <p:dialog
+    id="resultField"
+    widgetVar="$resultField"
+    header="Search"
+    hideEffect="explode"
+    appendTo="@(body)"
+    resizable="false"
+    draggable="false"
+    closeOnEscape="true"
+    >
+                <h:form>
+                
+                <p:dataTable
+        style="position: absolute;
+        top: 35vh;
+        margin-left: 20vh;
+        margin-right: 20vh;"
+        value="#{bookC.list}"
+      var="book"
+      paginator="true"
+      rows="5"
+      id="userTable"
+    >
+        
+        <p:column
+        headerText="Book Id"
+        style="text-align:left;"
+      >
+            <h:outputText value="#{book.id}" />
+        </p:column>
+        
+        <p:column headerText="Title">#{book.title}</p:column>
+        
+        <p:column headerText="Author">
+          <h:outputText value="#{book.writer}" />
+      </p:column>
+        
+        
+<!--        <p:column headerText="Preview">
+            <h:outputText value="#{book.preview}" />
+      </p:column>-->
+        
+        
+        
+      <p:column headerText="Published Date">
+          <h:outputText value="#{book.releaseDate}">
+          <f:convertDateTime
+            type="date"
+            pattern="dd-MMM-yyyy"
+          />
+        </h:outputText>
+      </p:column>
+                </p:dataTable>
+                </h:form>
+            </p:dialog>
+            
+            
+            <p:dialog
+    id="searchDetail"
+    widgetVar="$searchDetail"
+    header="Serach"
+    hideEffect="explode"
+    appendTo="@(body)"
+    resizable="false"
+    draggable="false"
+    closeOnEscape="true"
+    >
+        
+                <p:inputText value="#{bookC.SBook.id}"/>
+                <p:commandButton value="Search"
+                                 icon="ui-icon-search"
+                                 actionListener="#{bookC.searchbyBookId()}"
+                                 ajax="true"
+                                 update=":resultField"
+                                 oncomplete="PF('$resultField')"/>
+                
+            </p:dialog>
+            
+            <p:commandButton
+                        style="background-color: white;
+                                border-color: transparent;
+                                position: absolute;
+                                top: 28%;
+                                left: 82.5%;"
+                      icon="ui-icon-search"
+                      id="serachbtn"
+                      value="Search"
+                      update=":searchDetail"
+                      ajax="true"
+                      oncomplete="PF('$searchDetail').show()"
+                        />
+            
+            
+            
+            
+            
+  <h:outputScript></h:outputScript>
+  <p:dialog
+    id="bookDetail3"
+    widgetVar="$bookDetail3"
+    header="Delete Book"
+    hideEffect="explode"
+    appendTo="@(body)"
+    resizable="false"
+    draggable="false"
+    closeOnEscape="true"
+  >
+    <h:form>
+      <p:panelGrid columns="2">
+        
+          
+          <h:outputLabel for="bookId" value="Book ID: *" />
+        <p:inputText
+          id="bookId"
+          value="#{bookC.delBook.id}"
+          label="Book Id"
+          placeholder="Book
+Id"
+        />
+          
+
+        
+        <p:commandButton
+          value="delete"
+          ajax="true"
+          icon="ui-icon-disk"
+          update=":form1:userTable"
+          actionListener="#{bookC.DelBook(bookC.delBook)}"
+          oncomplete="handleComplete(xhr, status, args)"
+        />
+        <p:commandButton
+          value="Cancel"
+          id="cancelButtonId"
+          onclick="handleComplete(xhr, status, args)"
+        />
+      </p:panelGrid>
+    </h:form>
+  </p:dialog>
+
+  <p:dialog
+    id="bookDetail2"
+    widgetVar="$bookDetail2"
+    header="Update Book"
+    hideEffect="explode"
+    appendTo="@(body)"
+    resizable="false"
+    draggable="false"
+    closeOnEscape="true"
+  >
+    <h:form>
+        <h:inputHidden value="#{bookC.UBook.id}" />
+      <p:panelGrid columns="2">
+        <h:outputLabel for="bookId" value="Book ID: *" />
+        <p:inputText
+          id="bookId"
+          value="#{bookC.UBook.id}"
+          
+          label="Book Id"
+          placeholder="Book
+Id"
+        />
+        <h:outputLabel for="title" value="Book Title: *" />
+        <p:inputText
+          id="title"
+          value="#{bookC.UBook.title}"
+          label="Book Title"
+          placeholder="Book
+Title"
+        />
+        <h:outputLabel
+          for="category"
+          value="Preview"
+        />
+        <p:inputTextarea
+          id="Preview"
+          label="Book Preview"
+          value="#{bookC.UBook.preview}"
+          placeholder="Book preview"
+        />
+        <h:outputLabel for="author" value="Author" />
+        <p:inputText
+          id="author"
+          label="Book Author"
+          value="#{bookC.UBook.writer}"
+          placeholder="Author"
+        />
+        <p:outputLabel for="datePub" value="Published Date" />
+        <p:calendar
+          id="datePub"
+          value="#{bookC.UBook.releaseDate}"
+          label="DatePosted:"
+          required="true"
+          pattern="dd/MM/yyyy"
+          effect="slideDown"
+          requiredMessage="Please Enter Published Date!"
+          navigator="true"
+          showButtonPanel="true"
+          yearRange="c-60:c+60"
+          placeholder="Published
+Date"
+        />
+        <p:outputLabel for="Link" value="Link" />
+        <p:inputText
+          id="Link"
+          label="Link"
+          value="#{bookC.UBook.link}"
+          placeholder="Link"
+        />
+        <p:commandButton
+          value="Update"
+          ajax="true"
+          icon="ui-icon-disk"
+          update=":form1:userTable"
+          actionListener="#{bookC.UpdateBook(bookC.UBook)}"
+          oncomplete="handleComplete(xhr, status, args)"
+        />
+        <p:commandButton
+          value="Cancel"
+          id="cancelButtonId"
+          onclick="handleComplete(xhr, status, args)"
+        />
+      </p:panelGrid>
+    </h:form>
+  </p:dialog>
+  <h:outputScript id="handleCompleteScript" target="body"></h:outputScript>
+  <h:form id="form1">
+    
+    
+    
+    <p:dataTable
+        style="position: absolute;
+        top: 35vh;
+        margin-left: 20vh;
+        margin-right: 20vh;"
+      value="#{bookC.books}"
+      var="book"
+      paginator="true"
+      rows="6"
+      id="userTable"
+    >
+        
+        <p:column
+        headerText="Book Id"
+        style="text-align:left;"
+      >
+            <h:outputText value="#{book.id}" />
+        </p:column>
+        
+        <p:column headerText="Title">#{book.title}</p:column>
+        
+        <p:column headerText="Author">
+          <h:outputText value="#{book.writer}" />
+      </p:column>
+        
+        
+<!--        <p:column headerText="Preview">
+            <h:outputText value="#{book.preview}" />
+      </p:column>-->
+        
+        
+        
+      <p:column headerText="Published Date">
+          <h:outputText value="#{book.releaseDate}">
+          <f:convertDateTime
+            type="date"
+            pattern="dd-MMM-yyyy"
+          />
+        </h:outputText>
+      </p:column>
+
+        
+      <p:column headerText="Edit" 
+                                  style="text-align: center; margin-left: 2vh;">
+<p:commandButton
+                                style="background-color: transparent;
+                                border-color: transparent;
+                                margin-left: 2px;"
+          icon="ui-icon-pencil"
+          id="editUserBtn"
+          value="Edit"
+          ajax="true"
+          actionListener="#{bookC.changeBook(bookC.UBook)}"
+          update=":bookDetail2"
+          oncomplete="PF('$bookDetail2').show()"
+        />                          </p:column>
+<!--        <p:column headerText="Link">
+            <h:outputText value="#{book.link}" />
+      </p:column>-->
+      
+      
+    </p:dataTable>
+  </h:form>
+            
+  
+
+        
+        
+        
+        </div>
+        
+        <div style="background-color: #999999;
+             height: 30vh;">
+            test
+        </div>
+        
+        </div>
+    
+</h:body>
+</html>
